@@ -1,3 +1,44 @@
+function openFullscreen() {
+  if (document.body.requestFullscreen) {
+    document.body.requestFullscreen();
+  } else if (document.body.mozRequestFullScreen) {
+    /* Firefox */
+    document.body.mozRequestFullScreen();
+  } else if (document.body.webkitRequestFullscreen) {
+    /* Chrome, Safari and Opera */
+    document.body.webkitRequestFullscreen();
+  } else if (document.body.msRequestFullscreen) {
+    /* IE/Edge */
+    document.body.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    /* Firefox */
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    /* Chrome, Safari and Opera */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    /* IE/Edge */
+    document.msExitFullscreen();
+  }
+}
+
+function isFullscreen() {
+  var element = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement || null;
+  if (element === null) return false;
+  return true;
+}
+// Try to go fullscreen right away.
+try {
+  openFullscreen();
+} catch (e) {}
+
+
 $("#article-wrapper").css({
   "transition-duration": "0s",
   opacity: 0,
@@ -14,6 +55,16 @@ $("#article-button > img").click(() => {
     fadeIn($("#article-wrapper"));
   }
   articleShown = !articleShown;
+});
+
+$("#fullscreen-button").click(() => {
+  if (isFullscreen()) {
+    closeFullscreen();
+    $("#fullscreen-button > img").attr("src", "https://image.flaticon.com/icons/svg/130/130910.svg");
+  } else {
+    openFullscreen();
+    $("#fullscreen-button > img").attr("src", "https://image.flaticon.com/icons/svg/482/482607.svg");
+  }
 });
 
 function fadeIn(element) {
@@ -84,7 +135,7 @@ var paths = {
         "time": 2000
       }, {
         "callback": () => {
-          addLine(`<span style="font-size: 1.7em;">Ending 5.1: Neutralized</span>`);
+          addLine(`<span style="font-size: 0.6em; color: red;">! Article Updated !</span>`);
 
           update("object-class", "<strike>Safe</strike> Neutralized");
 
@@ -97,6 +148,11 @@ var paths = {
           );
         },
         "time": 3000
+      }, {
+        "callback": () => {
+          addLine(`<span style="font-size: 0.6em; color: red;">&lt;Connection Severed&gt;</span>`);
+        },
+        "time": 1000
       }]);
     }
   },
@@ -150,7 +206,9 @@ function addLine(line) {
     opacity: 0
   });
   $("#plaything-wrapper").append(lineEl);
-  fadeIn(lineEl);
+  setTimeout(() => {
+    fadeIn(lineEl);
+  }, 100);
 }
 
 function addAns(choice, ans) {
@@ -162,18 +220,19 @@ function addAns(choice, ans) {
     opacity: 0
   });
   $("#plaything-wrapper").append(ansButton);
-  fadeIn(ansButton);
+  setTimeout(() => {
+    fadeIn(ansButton);
+  }, 100);
   ansButton.on("click", () => {
     $(".plaything-answer").off();
+    $(".plaything-answer").attr("picked", "false");
     $(".plaything-answer:not([picked='true'])").css({
       "transition-duration": "1s",
-      opacity: 0.3,
-      "pointer-events": "none"
+      opacity: 0.3
     });
     ansButton.css({
       "transition-duration": "0s",
-      opacity: 1,
-      "pointer-events": "none"
+      opacity: 1
     });
     ansButton.attr("picked", "true");
     start(ansButton.attr("choice"));
