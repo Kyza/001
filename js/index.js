@@ -3,44 +3,68 @@ $("#article-wrapper").css({
   opacity: 0,
   "pointer-events": "none"
 });
-$("#fade-in").css({
-  "transition-duration": "1s",
-  opacity: 0,
-  "pointer-events": "none"
-});
+
+fadeOut($("#fade-in"));
 var articleShown = false;
 $("#article-button > img").click(() => {
   console.log(articleShown);
   if (articleShown) {
-    $("#article-wrapper").css({
-      "transition-duration": "1s",
-      opacity: 0,
-      "pointer-events": "none"
-    });
+    fadeOut($("#article-wrapper"));
   } else {
-    $("#article-wrapper").css({
-      "transition-duration": "1s",
-      opacity: 1,
-      "pointer-events": "auto"
-    });
+    fadeIn($("#article-wrapper"));
   }
   articleShown = !articleShown;
 });
 
+function fadeIn(element) {
+  $(element).css({
+    "transition-duration": "1s",
+    opacity: 1,
+    "pointer-events": "auto"
+  });
+}
+
+function fadeOut(element) {
+  $(element).css({
+    "transition-duration": "1s",
+    opacity: 0,
+    "pointer-events": "none"
+  });
+}
+
 var paths = {
   "beginning": {
     "script": () => {
-      addLine("The egg, a jet black ellipsoid radiating warmth, sits in an incubator inside of its containment chamber.");
-      addAns("ending5.1", "Do nothing. Wait for the egg to hatch on its own.");
-      addAns("d-class-watch", "Send a D-Class personnel to watch the egg.");
-      addAns("self-hatch1", "Watch the egg yourself.");
+      waitChain([{
+        "callback": () => {
+          addLine("The egg, a jet black ellipsoid radiating warmth, sits in an incubator inside of its containment chamber.");
+        },
+        "time": 0
+      }, {
+        "callback": () => {
+          addLine("There is a low-pitch humming noise coming from the incubator.");
+        },
+        "time": 3000
+      }, {
+        "callback": () => {
+          addLine("It could be a long time before anything interesting happens.");
+        },
+        "time": 3000
+      }, {
+        "callback": () => {
+          addAns("ending5.1", "Do nothing. Wait for the egg to hatch on its own.");
+          addAns("d-class-watch", "Send a D-Class personnel to watch the egg.");
+          addAns("self-hatch1", "Watch the egg yourself.");
+        },
+        "time": 3000
+      }]);
     }
   },
   "ending5.1": {
     "script": () => {
       waitChain([{
         "callback": () => {
-          addLine("You wait for months apon months for the egg to hatch.");
+          addLine("You wait months apon months for the egg to hatch.");
         },
         "time": 0
       }, {
@@ -81,6 +105,10 @@ var paths = {
       }, {
         "callback": () => {
           addLine("Several months later, D-15 reports unusually high levels of heat inside of SCP-001s incubator.");
+        },
+        "time": 3000
+      }, {
+        "callback": () => {
           addAns("d-class-hatch1", "Ignore the report, it's probably fine.");
           addAns("self-hatch2", "Go check on the egg up close.");
           addAns("d-class-hatch2", "Go check on the egg from a distance.");
@@ -110,7 +138,14 @@ var paths = {
 };
 
 function addLine(line) {
-  $("#plaything-wrapper").append(`<div class="plaything-line">` + line + `</div>`);
+  let lineEl = $(document.createElement("div"));
+  lineEl.attr("class", "plaything-line");
+  lineEl.html(line);
+  lineEl.css({
+    opacity: 0
+  });
+  $("#plaything-wrapper").append(lineEl);
+  fadeIn(lineEl);
 }
 
 function addAns(choice, ans) {
@@ -118,8 +153,24 @@ function addAns(choice, ans) {
   ansButton.attr("class", "plaything-answer");
   ansButton.attr("choice", choice);
   ansButton.html(ans);
+  ansButton.css({
+    opacity: 0
+  });
   $("#plaything-wrapper").append(ansButton);
-  ansButton.click(() => {
+  fadeIn(ansButton);
+  ansButton.on("click", () => {
+    $(".plaything-answer").off();
+    $(".plaything-answer:not([picked='true'])").css({
+      "transition-duration": "1s",
+      opacity: 0.3,
+      "pointer-events": "none"
+    });
+    ansButton.css({
+      "transition-duration": "0s",
+      opacity: 1,
+      "pointer-events": "none"
+    });
+    ansButton.attr("picked", "true");
     start(ansButton.attr("choice"));
   });
 }
