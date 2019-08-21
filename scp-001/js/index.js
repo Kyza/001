@@ -52,6 +52,11 @@ var paths = {
         "time": 3000
       }, {
         "callback": () => {
+          addLine("It is your choice.");
+        },
+        "time": 3000
+      }, {
+        "callback": () => {
           addAns("ending5.1", "Do nothing. Wait for the egg to hatch on its own.");
           addAns("d-class-watch", "Send a D-Class personnel to watch the egg.");
           addAns("self-hatch1", "Watch the egg yourself.");
