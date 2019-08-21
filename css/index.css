@@ -1,0 +1,82 @@
+* {
+  font-family: "Special Elite";
+  color: rgba(255, 255, 255, 0.4);
+}
+
+body {
+  margin: 0px !important;
+  overflow: hidden;
+}
+
+#plaything-wrapper {
+  background-color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 60%;
+  height: 90%;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  z-index: 0;
+}
+
+.plaything-line:nth-child(1) {
+  border-top: solid 1px black;
+}
+
+.plaything-line {
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: solid 1px black;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.plaything-answer {
+  color: red;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: solid 1px black;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.plaything-answer:hover {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#article-wrapper {
+  background-color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 60%;
+  height: 90%;
+  z-index: 1;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+#article-button {
+  display: inline;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 5%;
+  height: auto;
+  z-index: 2;
+}
+#article-button > img {
+  width: 100%;
+  height: auto;
+  filter: invert(1);
+  transition-duration: 0.4s;
+}
+#article-button > img:hover {
+  filter: invert(0.5);
+}
