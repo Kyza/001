@@ -104,7 +104,7 @@ var paths = {
         "time": 0
       }, {
         "callback": () => {
-          addLine("Several months later, D-15 reports unusually high levels of heat inside of SCP-001s incubator.");
+          addLine("Several months later, D-15 reports unusually high levels of heat inside of SCP-001's incubator.");
         },
         "time": 3000
       }, {
