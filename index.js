@@ -119,7 +119,7 @@ var paths = {
         "time": 0
       }, {
         "callback": () => {
-          addLine("There is a low-pitch humming noise coming from the incubator.");
+          addLine("There is a low-pitch humming noise coming from the machine.");
         },
         "time": 3000
       }, {
@@ -166,11 +166,11 @@ var paths = {
           update("object-class", "<strike>Safe</strike> Neutralized");
 
           update("special-containment-procedures",
-            "SCP-001 is to be contained inside of an insulated high-security vault in Site-██. The vault is equipped with a thermometer to measure the temperature. Any spikes in temperature must be reported to the lead researcher of SCP-001 immediately."
+            "SCP-001 is to be contained inside of a cooled high-security vault in Site-██. The vault is equipped with a thermometer to measure the temperature. Any spikes in temperature must be reported to the lead researcher of SCP-001 immediately."
           );
 
           update("description",
-            "SCP-001 is a pile of ash previously taking the form of a pure black egg which measured 0.8x0.8x1.1 meters standing up. SCP-001 was reduced to ash on ██/██/2019 when the temperatures inside of its incubator suddenly reached extreme levels, causing SCP-001 to disintegrate."
+            "SCP-001 is a pile of ash previously taking the form of a pure black egg which measured 0.8x0.8x1.1 meters standing up. SCP-001 was reduced to ash on ██/██/19██ when the temperatures inside of its incubator suddenly reached extreme levels, causing SCP-001 to disintegrate and the incubator to melt."
           );
         },
         "time": 3000
